@@ -4,6 +4,7 @@ def once(func):
     wraps(func)
     def inner(*args, **kwargs):
         if not inner.called:
+            inner.wrapped_func = func
             inner.result = func(*args, **kwargs)
             inner.called = True
 
@@ -19,3 +20,4 @@ def initialize_settings():
     
 print(initialize_settings())
 print(initialize_settings())
+print(initialize_settings.wrapped_func())
