@@ -1,9 +1,13 @@
+from functools import wraps
+
 def once(func):
-    @functools.wraps(func)
+    wraps(func)
     def inner(*args, **kwargs):
         if not inner.called:
-            func(*args, **kwargs)
+            inner.result = func(*args, **kwargs)
             inner.called = True
+
+        return inner.result
             
     inner.called = False
     return inner
@@ -11,5 +15,7 @@ def once(func):
 @once
 def initialize_settings():
     print("Settings initialized")
+    return 25
     
-initialize_settings()
+print(initialize_settings())
+print(initialize_settings())
